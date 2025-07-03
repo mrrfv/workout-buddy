@@ -18,6 +18,8 @@ jobs:
             archive: zip
     steps:
       - uses: actions/checkout@master
+      - name: Make pre-build script executable
+        run: chmod +x ./.github/scripts/pre-build.sh
       - name: Compile and release
         uses: rust-build/rust-build.action@v1.4.5
         env:
