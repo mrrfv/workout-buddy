@@ -1,0 +1,9 @@
+{
+    "model": "google/gemma-3-4b",
+    "api_base": "http://localhost:1234/v1",
+    "api_key": "lm-studio",
+    "monitor_to_capture": 0,
+    "notification_sound_path": "notification.mp3",
+    "ignore_if_time_remaining_higher_than": 60.0,
+    "send_notification_overtime": false
+}
