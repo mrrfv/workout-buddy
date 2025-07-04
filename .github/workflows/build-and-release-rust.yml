@@ -42,3 +42,6 @@ jobs:
           executable-name: workout_buddy
           target: ${{ matrix.platform.target }}
           changes-file: ""
+          extra-files: |
+            config.example.json
+            README.md
