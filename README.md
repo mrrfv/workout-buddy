@@ -2,6 +2,12 @@
 
 Play your favorite workout video on YouTube and mute it. Workout Buddy will attempt to detect the time remaining for the current exercise using an on-device vision language model, and send an audible notification when it's time to stop.
 
+## Demo
+
+![Demo GIF](.github/demo.GIF)
+
+Source video can be found [here](https://www.youtube.com/watch?v=UMzQonUGE_s). I am not affiliated with nor endorsed by the video author.
+
 ## Features
 
 - Video-agnostic. It works with any YouTube video, as long as it contains a countdown timer
