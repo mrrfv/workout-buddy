@@ -41,3 +41,4 @@ jobs:
         with:
           executable-name: workout_buddy
           target: ${{ matrix.platform.target }}
+          changes-file: ""
