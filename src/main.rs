@@ -2,6 +2,8 @@ mod models;
 mod utils;
 mod analysis;
 
+use std::time::Duration;
+
 use models::*;
 use utils::*;
 use analysis::run_analysis;
@@ -12,6 +14,9 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let config_data = std::fs::read_to_string("config.json").expect("Failed to read config file. Make sure it exists (config.json) and is valid.");
     let config: AppConfig = serde_json::from_str(&config_data)?;
     println!("Configuration loaded: {:#?}", config);
+
+    println!("Starting in 5 seconds! Get ready!");
+    tokio::time::sleep(Duration::from_secs(5)).await;
 
     loop {
         println!("Starting analysis...");
