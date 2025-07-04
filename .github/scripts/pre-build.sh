@@ -11,8 +11,8 @@ if command -v apk >/dev/null 2>&1; then
 elif command -v apt-get >/dev/null 2>&1; then
   # Debian / Ubuntu
   echo "Detected Debian-based system - installing via apt"
-  apt-get update
-  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  sudo apt-get update
+  DEBIAN_FRONTEND=noninteractive sudo apt-get install -y --no-install-recommends \
     pkg-config \
     libwayland-dev \
     libpipewire-0.3-dev \
