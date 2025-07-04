@@ -25,10 +25,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Run pre-build script
-        if: matrix.os == 'ubuntu-24.04'
         run: |
           chmod +x ./.github/scripts/pre-build.sh
           sh ./.github/scripts/pre-build.sh
+        shell: bash
       - name: Build binary
         uses: houseabsolute/actions-rust-cross@v1
         with:
