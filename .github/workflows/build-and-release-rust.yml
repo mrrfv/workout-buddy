@@ -1,31 +1,39 @@
-on:
-  release:
-    types: [created]
-
 jobs:
   release:
-    name: release ${{ matrix.target }}
-    runs-on: ubuntu-latest
+    name: Release - ${{ matrix.platform.os-name }}
     strategy:
-      fail-fast: false
       matrix:
-        include:
-          - target: x86_64-pc-windows-gnu
-            archive: zip
-          - target: x86_64-unknown-linux-musl
-            archive: tar.xz
-          - target: x86_64-apple-darwin
-            archive: zip
+        platform:
+          - os-name: Linux-x86_64
+            runs-on: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+
+          - os-name: Windows-x86_64
+            runs-on: windows-latest
+            target: x86_64-pc-windows-msvc
+
+          - os-name: macOS-x86_64
+            runs-on: macOS-latest
+            target: x86_64-apple-darwin
+
+    runs-on: ${{ matrix.platform.runs-on }}
     steps:
-      - uses: actions/checkout@master
-      - name: Make pre-build script executable
-        run: chmod +x ./.github/scripts/pre-build.sh
-      - name: Compile and release
-        uses: rust-build/rust-build.action@v1.4.5
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run pre-build script
+        if: matrix.os == 'Linux-x86_64'
+        run: |
+          chmod +x ./.github/scripts/pre-build.sh
+          sh ./.github/scripts/pre-build.sh
+      - name: Build binary
+        uses: houseabsolute/actions-rust-cross@v1
         with:
-          RUSTTARGET: ${{ matrix.target }}
-          ARCHIVE_TYPES: ${{ matrix.archive }}
-          TOOLCHAIN_VERSION: stable
-          PRE_BUILD: ./.github/scripts/pre-build.sh
+          command: build
+          target: ${{ matrix.platform.target }}
+          args: "--locked --release"
+          strip: true
+      - name: Publish artifacts and release
+        uses: houseabsolute/actions-rust-release@v0
+        with:
+          executable-name: workout_buddy
+          target: ${{ matrix.platform.target }}
